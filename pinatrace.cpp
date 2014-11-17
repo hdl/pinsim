@@ -38,13 +38,16 @@ END_LEGAL */
 
 
 FILE * trace;
+FILE * trace2;
 int count = 0;
 // Print a memory read record
 VOID RecordMemRead(VOID * ip, VOID * addr)
 {
     count++;
-    if((count > 100000) && (count <=400000))
+    if((count > 100000) && (count <=400000)){
         fprintf(trace,"%p: R %p\n", ip, addr);
+        fprintf(trace2,"r %p 4\n", addr);
+    }
     if(count > 400000)
 	exit(0);
 }
@@ -53,8 +56,11 @@ VOID RecordMemRead(VOID * ip, VOID * addr)
 VOID RecordMemWrite(VOID * ip, VOID * addr)
 {
     count++;
-    if((count > 100000) && (count <=400000))
+    if((count > 100000) && (count <=400000)){
         fprintf(trace,"%p: W %p\n", ip, addr);
+        fprintf(trace2,"w %p 4\n", addr);
+    }
+    if(count > 400000)
     if(count > 400000)
 	exit(0);
 }
@@ -120,6 +126,7 @@ int main(int argc, char *argv[])
     if (PIN_Init(argc, argv)) return Usage();
 
     trace = fopen("pinatrace.out", "w");
+    trace2 = fopen("pinatrace.txt", "w");
 
     INS_AddInstrumentFunction(Instruction, 0);
     PIN_AddFiniFunction(Fini, 0);
