@@ -61,7 +61,6 @@ VOID RecordMemWrite(VOID * ip, VOID * addr)
         fprintf(trace2,"w %p 4\n", addr);
     }
     if(count > 400000)
-    if(count > 400000)
 	exit(0);
 }
 
